@@ -14,23 +14,18 @@ import org.hibernate.validator.constraints.NotEmpty;
  * 
  * @author Peter van Vliet
  */
-public class User implements Principal
-{
+public class User implements Principal {
+
+
+    @NotEmpty
+    @JsonView(View.Public.class)
+    private int userID;
+
     @NotEmpty
     @Length(min = 3, max = 100)
     @JsonView(View.Public.class)
-    private String fullName;
-    
-    @NotEmpty
-    @Length(min = 6, max = 7)
-    @JsonView(View.Public.class)
-    private String postcode;
-    
-    @NotEmpty
-    @Length(min = 1, max = 10)
-    @JsonView(View.Public.class)
-    private String streetnumber;
-    
+    private String userName;
+
     @NotEmpty
     @Email
     @JsonView(View.Public.class)
@@ -40,38 +35,21 @@ public class User implements Principal
     @Length(min = 8)
     @JsonView(View.Protected.class)
     private String password;
-    
+
+    @JsonView(View.Public.class)
+    private boolean active;
+
     @JsonView(View.Private.class)
     private String[] roles;
 
-    public String getFullName()
+    public String getUserName()
     {
-        return fullName;
+        return userName;
     }
 
-    public void setFullName(String fullName)
+    public void setUserName(String userName)
     {
-        this.fullName = fullName;
-    }
-
-    public String getPostcode()
-    {
-        return postcode;
-    }
-
-    public void setPostcode(String postcode)
-    {
-        this.postcode = postcode;
-    }
-
-    public String getStreetnumber()
-    {
-        return streetnumber;
-    }
-
-    public void setStreetnumber(String streetnumber)
-    {
-        this.streetnumber = streetnumber;
+        this.userName = userName;
     }
 
     public String getEmailAddress()
@@ -94,13 +72,31 @@ public class User implements Principal
         this.password = password;
     }
 
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+
+
     @Override
     @JsonIgnore
     public String getName()
     {
-        return fullName;
+        return userName;
     }
-    
+
     public String[] getRoles()
     {
         return roles;

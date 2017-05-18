@@ -25,15 +25,14 @@ public class AuthenticationService implements Authenticator<BasicCredentials, Us
     private final UserDAO userDAO;
     
     @Inject
-    public AuthenticationService(UserDAO userDAO)
-    {
+    public AuthenticationService(UserDAO userDAO) {
         this.userDAO = userDAO;
     }
 
     @Override
     public Optional<User> authenticate(BasicCredentials credentials) throws AuthenticationException
     {
-        User user = userDAO.getByEmailAddress(credentials.getUsername());
+        User user = userDAO.getByUserName(credentials.getUsername());
         
         if (user != null && user.getPassword().equals(credentials.getPassword()))
         {

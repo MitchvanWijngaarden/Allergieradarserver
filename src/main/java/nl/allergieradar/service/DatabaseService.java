@@ -16,14 +16,12 @@ public class DatabaseService {
         super();
 
         try {
-            Class.forName("org.mysql.Driver");
-
+            Class.forName("com.mysql.jdbc.Driver");
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             return;
         }
-
     }
 
     public static DatabaseService getInstance() {
@@ -38,7 +36,7 @@ public class DatabaseService {
     }
 
     public Connection getConnection(String username, String password) throws SQLException {
-        String URL = "jdbc:mysql://localhost:5432/allergieradar";
+        String URL = "jdbc:mysql://localhost:3306/allergieradar";
 
         Properties info = new Properties();
         Connection conn = DriverManager.getConnection(URL, username, password);
