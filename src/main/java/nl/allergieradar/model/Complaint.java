@@ -13,8 +13,8 @@ public class Complaint {
     @JsonView(View.Public.class)
     private int complaintID;
 
-    @JsonView(View.Public.class)
-    private Date data;
+//    @JsonView(View.Public.class)
+//    private Date data;
 
     @JsonView(View.Public.class)
     private int eyes;
@@ -44,14 +44,14 @@ public class Complaint {
         this.complaintID = complaintID;
     }
 
-    @JsonIgnore
-    public Date getData() {
-        return data;
-    }
-
-    public void setData(Date data) {
-        this.data = data;
-    }
+//    @JsonIgnore
+//    public Date getData() {
+//        return data;
+//    }
+//
+//    public void setData(Date data) {
+//        this.data = data;
+//    }
 
     @JsonIgnore
     public int getEyes() {

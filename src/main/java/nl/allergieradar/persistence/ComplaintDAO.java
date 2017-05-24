@@ -28,8 +28,8 @@ public class ComplaintDAO extends DatabaseDAO {
 
         try {
             getAllComplaints = conn.prepareStatement("SELECT * FROM complaint;");
-            addComplaint = conn.prepareStatement("INSERT INTO complaint (date, eyes, nose," +
-                    " lungs, medicine, latitude, longtitude) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            addComplaint = conn.prepareStatement("INSERT INTO complaint (eyes, nose," +
+                    " lungs, medicine, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?)");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -47,7 +47,7 @@ public class ComplaintDAO extends DatabaseDAO {
             while (rs.next()) {
                 Complaint complaint = new Complaint();
                 complaint.setComplaintID(rs.getInt(1));
-                complaint.setData(rs.getDate(2));
+//                complaint.setData(rs.getDate(2));
                 complaint.setEyes(rs.getInt(3));
                 complaint.setNose(rs.getInt(4));
                 complaint.setLungs(rs.getInt(5));
@@ -66,6 +66,21 @@ public class ComplaintDAO extends DatabaseDAO {
 
     public void add(Complaint complaint)
     {
-        complaints.add(complaint);
+
+        System.out.println("Complaint add called");
+        try {
+            addComplaint.setInt(1, complaint.getEyes());
+            addComplaint.setInt(2, complaint.getNose());
+            addComplaint.setInt(3, complaint.getLungs());
+            addComplaint.setInt(4, complaint.getMedicine());
+            addComplaint.setString(5, complaint.getLatitude());
+            addComplaint.setString(6, complaint.getLongtitude());
+
+            addComplaint.executeUpdate();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
