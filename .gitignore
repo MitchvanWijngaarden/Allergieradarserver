@@ -1,2 +1,17 @@
-/target/
-/nbproject/
+# Maven
+target/
+dependency-reduced-pom.xml
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+release.properties
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+nb-configuration.xml
+atlassian-ide-plugin.xml
+
+logs
