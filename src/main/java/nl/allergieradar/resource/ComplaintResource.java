@@ -25,7 +25,7 @@ public class ComplaintResource {
 
     @GET
     @JsonView(View.Public.class)
-    @PermitAll
+    //@PermitAll
     public Collection<Complaint> retrieveAll()
     {
         return service.getAll();
@@ -34,6 +34,7 @@ public class ComplaintResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @JsonView(View.Protected.class)
+    @PermitAll
     public void create(Complaint complaint)
     {
         service.add(complaint);
