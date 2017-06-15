@@ -31,6 +31,7 @@ public class ComplaintDAO extends DatabaseDAO {
             addComplaint = conn.prepareStatement("INSERT INTO complaint (eyes, nose," +
                     " lungs, medicine, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?)");
 
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

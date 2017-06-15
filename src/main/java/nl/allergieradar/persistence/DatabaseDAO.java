@@ -21,7 +21,7 @@ public abstract class DatabaseDAO {
      * @throws Exception the exception
      */
     public DatabaseDAO() throws Exception {
-        this.conn = DatabaseService.getInstance().getConnection("allergieradar", "allergieradar123");
+        this.conn = DatabaseService.getInstance().getConnection("vedadnd183_radar", "radarwachtwoord");
 
     }
 }
