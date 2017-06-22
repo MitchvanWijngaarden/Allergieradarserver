@@ -2,9 +2,11 @@ package nl.allergieradar.service;
 
 import nl.allergieradar.model.Complaint;
 import nl.allergieradar.persistence.ComplaintDAO;
+import nl.allergieradar.persistence.MapDAO;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.io.IOException;
 import java.util.Collection;
 
 /**
@@ -12,19 +14,27 @@ import java.util.Collection;
  */
 @Singleton
 public class ComplaintService {
-    private final ComplaintDAO dao;
+    private final ComplaintDAO complaintDAOdao;
+    private final MapDAO mapdao;
 
     @Inject
-    public ComplaintService(ComplaintDAO dao) {
-        this.dao = dao;
+    public ComplaintService(ComplaintDAO dao, MapDAO mapdao) {
+        this.complaintDAOdao = dao;
+        this.mapdao = mapdao;
     }
 
     public Collection<Complaint> getAll()
     {
-        return dao.getAll();
+        return complaintDAOdao.getAll();
     }
 
-    public void add(Complaint complaint) { dao.add(complaint); }
+    public void add(Complaint complaint) { complaintDAOdao.add(complaint);
+        try {
+            mapdao.add(complaint);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }
