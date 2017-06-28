@@ -48,7 +48,7 @@ public class ComplaintDAO extends DatabaseDAO {
             while (rs.next()) {
                 Complaint complaint = new Complaint();
                 complaint.setComplaintID(rs.getInt(1));
-//                complaint.setData(rs.getDate(2));
+                complaint.setDate(rs.getDate(2));
                 complaint.setEyes(rs.getInt(3));
                 complaint.setNose(rs.getInt(4));
                 complaint.setLungs(rs.getInt(5));
