@@ -124,7 +124,7 @@ public class MapDAO extends DatabaseDAO {
         try {
             addMap.setInt(1, setAvgComplain(complaint));
             addMap.setString(2, setLocation(complaint));
-            addMap.setDate(3, complaint.getData());
+            addMap.setDate(3, complaint.getDate());
             addMap.executeUpdate();
 
 
