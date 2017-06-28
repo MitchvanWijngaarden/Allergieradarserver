@@ -107,7 +107,7 @@ public class MapDAO extends DatabaseDAO {
                 map.setId(rs.getInt(1));
                 map.setAvg_complaint(rs.getInt(2));
                 map.setLocation(rs.getString(3));
-                //map.setDate(rs.getDate(4));
+                map.setDate(rs.getDate(4));
                 maps.add(map);
             }
 
