@@ -17,6 +17,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import nl.allergieradar.View;
+import nl.allergieradar.model.Answer;
+import nl.allergieradar.model.Question;
 import nl.allergieradar.model.User;
 import nl.allergieradar.service.UserService;
 
@@ -42,9 +44,13 @@ public class UserResource
     @GET
     @JsonView(View.Public.class)
     @PermitAll
-    public Collection<User> retrieveAll()
-    {
-        return service.getAll();
+    public Collection<User> retrieveAll() { return service.getAll(); }
+
+    @GET
+    @Path("/questions")
+    @JsonView(View.Public.class)
+    public Collection<Question> retrieveQuestion() {
+        return service.getQuestion();
     }
     
     @GET
@@ -63,7 +69,7 @@ public class UserResource
     {
         service.add(user);
     }
-    
+
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)

@@ -3,6 +3,9 @@ package nl.allergieradar.service;
 import java.util.Collection;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import nl.allergieradar.model.Answer;
+import nl.allergieradar.model.Question;
 import nl.allergieradar.model.User;
 import nl.allergieradar.persistence.UserDAO;
 
@@ -25,7 +28,9 @@ public class UserService extends BaseService<User>
     {
         return dao.getAll();
     }
-    
+
+    public Collection<Question> getQuestion() {return dao.getQuestion(); }
+
     public User get(int id)
     {
         return requireResult(dao.get(id));
@@ -34,8 +39,8 @@ public class UserService extends BaseService<User>
     public void add(User user)
     {
         user.setRoles(new String[] { "GUEST" });
-        
-        dao.add(user);
+
+        dao.addUser(user);
     }
     
     public void update(User authenticator, int id, User user)
@@ -59,5 +64,10 @@ public class UserService extends BaseService<User>
         User user = get(id);
         
         dao.delete(id);
+    }
+
+    public void addAnswer(Answer answer)
+    {
+        dao.addAnswer(answer);
     }
 }

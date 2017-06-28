@@ -3,10 +3,8 @@ package nl.allergieradar.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import java.security.Principal;
+
 import nl.allergieradar.View;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * Meer informatie over validatie:
@@ -16,23 +14,36 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 public class User implements Principal {
 
-
-    @NotEmpty
     @JsonView(View.Public.class)
     private int userID;
 
-    @NotEmpty
-    @Length(min = 3, max = 100)
+    //@NotEmpty
+    //@Length(min = 3, max = 100)
     @JsonView(View.Public.class)
     private String userName;
 
-    @NotEmpty
-    @Email
+    //@NotEmpty
+    //@Email
     @JsonView(View.Public.class)
-    private String emailAddress;
+    private String emailAdres;
+
+    //@NotEmpty
+    //@Length(min = 4, max = 4)
+    @JsonView(View.Public.class)
+    private int year_of_birth;
+
+    //@NotEmpty
+    //@Length(min = 1, max = 1)
+    @JsonView(View.Public.class)
+    private String gender;
+
+    //@NotEmpty
+    //@Length(min = 4, max = 4)
+    @JsonView(View.Public.class)
+    private int zip_code;
     
-    @NotEmpty
-    @Length(min = 8)
+    //@NotEmpty
+    //@Length(min = 8)
     @JsonView(View.Protected.class)
     private String password;
 
@@ -42,6 +53,7 @@ public class User implements Principal {
     @JsonView(View.Private.class)
     private String[] roles;
 
+    @JsonIgnore
     public String getUserName()
     {
         return userName;
@@ -52,16 +64,18 @@ public class User implements Principal {
         this.userName = userName;
     }
 
-    public String getEmailAddress()
+    @JsonIgnore
+    public String getEmailAdres()
     {
-        return emailAddress;
+        return emailAdres;
     }
 
-    public void setEmailAddress(String emailAddress)
+    public void setEmailAdres(String emailAdres)
     {
-        this.emailAddress = emailAddress;
+        this.emailAdres = emailAdres;
     }
 
+    @JsonIgnore
     public String getPassword()
     {
         return password;
@@ -72,6 +86,7 @@ public class User implements Principal {
         this.password = password;
     }
 
+    @JsonIgnore
     public int getUserID() {
         return userID;
     }
@@ -80,6 +95,7 @@ public class User implements Principal {
         this.userID = userID;
     }
 
+    @JsonIgnore
     public boolean isActive() {
         return active;
     }
@@ -119,12 +135,39 @@ public class User implements Principal {
                 }
             }
         }
-        
+
         return false;
     }
-    
+
     public boolean equals(User user)
     {
-        return emailAddress.equals(user.getEmailAddress());
+        return emailAdres.equals(user.getEmailAdres());
+    }
+
+    @JsonIgnore
+    public int getYear_of_birth() {
+        return year_of_birth;
+    }
+
+    public void setYear_of_birth(int year_of_birth) {
+        this.year_of_birth = year_of_birth;
+    }
+
+    @JsonIgnore
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    @JsonIgnore
+    public int getZip_code() {
+        return zip_code;
+    }
+
+    public void setZip_code(int zip_code) {
+        this.zip_code = zip_code;
     }
 }
