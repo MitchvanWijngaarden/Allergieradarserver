@@ -38,6 +38,7 @@ public class MapDAO extends DatabaseDAO {
                 //getLatLong = conn.prepareStatement("SELECT latitude ,longitude FROM complaint;");
                // setAvgComplain = conn.prepareStatement("SELECT avg( eyes + nose + lungs)/3.0 FROM complaint;");
                 getAllMap = conn.prepareStatement("SELECT * FROM map WHERE DATE_FORMAT(map.date, '%Y-%m-%d') = CURDATE() ;");
+                //getAllMap = conn.prepareStatement("SELECT * FROM map ;");
                 addMap = conn.prepareStatement("INSERT INTO map (avg_complain, location,date) VALUES (?, ?, ?)");
 
 
