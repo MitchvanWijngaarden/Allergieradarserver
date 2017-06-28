@@ -1,5 +1,6 @@
 package nl.allergieradar.persistence;
 
+import nl.allergieradar.model.Complaint;
 import nl.allergieradar.model.Map;
 import org.json.JSONObject;
 
@@ -19,9 +20,10 @@ import java.util.Scanner;
 @Singleton
 public class MapDAO extends DatabaseDAO {
 
-        private PreparedStatement setAvgComplain;
-    private PreparedStatement getAllMap;
+        //private PreparedStatement setAvgComplain;
+        private PreparedStatement getAllMap;
         private PreparedStatement addMap;
+       // private PreparedStatement getLatLong;
         private List<Map> maps;
 
 
@@ -33,46 +35,42 @@ public class MapDAO extends DatabaseDAO {
         private void prepareStatements() {
 
             try {
-                setLocation();
-                setAvgComplain = conn.prepareStatement("SELECT avg( eyes + nose + lungs)/3.0 FROM complaint;");
-                getAllMap = conn.prepareStatement("SELECT * FROM map;");
+                //getLatLong = conn.prepareStatement("SELECT latitude ,longitude FROM complaint;");
+               // setAvgComplain = conn.prepareStatement("SELECT avg( eyes + nose + lungs)/3.0 FROM complaint;");
+                getAllMap = conn.prepareStatement("SELECT * FROM map WHERE DATE_FORMAT(map.date, '%Y-%m-%d') = CURDATE() ;");
                 addMap = conn.prepareStatement("INSERT INTO map (avg_complain, location,date) VALUES (?, ?, ?)");
 
 
             } catch (SQLException e) {
                 e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         }
+    public String getLocation(Complaint complaint){
+        String lng=complaint.getLongtitude();
+        String lat= complaint.getLatitude();
 
-    public int setAvgComplain(){
 
-            int avgComplain  = 0;
+        System.out.println(lat+","+lng);
+
+        return lat+","+lng;
+    }
+    public int setAvgComplain(Complaint complaint){
+
+            int avgComplain  = (complaint.getEyes() + complaint.getLungs() + complaint.getNose())/ 3;
 
 
-        try {
-            ResultSet rs = getAllMap.executeQuery();
 
-            while (rs.next()) {
-
-              avgComplain =  rs.getInt(1);
-
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         return avgComplain;
     }
 
 
 
-    public void setLocation() throws IOException {
+    public String setLocation(Complaint complaint) throws IOException {
+        String location ="";
 
         // build a URL
-        String s = "https://maps.googleapis.com/maps/api/geocode/json?&latlng=52.152029,4.487915";
+        String s = "https://maps.googleapis.com/maps/api/geocode/json?&latlng="+getLocation(complaint);
 
         URL url = new URL(s);
 
@@ -85,18 +83,16 @@ public class MapDAO extends DatabaseDAO {
 
         // build a JSON object
         JSONObject obj = new JSONObject(str);
-        if (! obj.getString("status").equals("OK"))
-            return;
-
-        // get the first result
-        JSONObject res = obj.getJSONArray("results").getJSONObject(0);
-        //System.out.println(res.getString("address_components"));
-//        JSONObject loc =
-//                res.getJSONObject("long_name").getJSONObject("location");
-//        System.out.println("lat: " + loc.getDouble("lat") +
-//                ", lng: " + loc.getDouble("lng"));
 
 
+
+            // get the first result
+            JSONObject res = obj.getJSONArray("results").getJSONObject(0);
+            location = res.getJSONArray("address_components").getJSONObject(3).get("long_name").toString();
+
+        System.out.println(location);
+        System.out.println(s);
+        return location;
     }
 
     public List<Map> getAll()
@@ -121,14 +117,13 @@ public class MapDAO extends DatabaseDAO {
 
         return maps;
     }
-    public void add(Map map)
-    {
+    public void add(Complaint complaint) throws IOException {
 
-        System.out.println("Complaint add called");
+        System.out.println("Map add called");
         try {
-            addMap.setInt(1, setAvgComplain());
-            addMap.setString(2, map.getLocation());
-            addMap.setDate(3, map.getDate());
+            addMap.setInt(1, setAvgComplain(complaint));
+            addMap.setString(2, setLocation(complaint));
+            addMap.setDate(3, complaint.getData());
             addMap.executeUpdate();
 
 

@@ -1,9 +1,11 @@
 package nl.allergieradar.service;
 
+import nl.allergieradar.model.Complaint;
 import nl.allergieradar.model.Map;
 import nl.allergieradar.persistence.MapDAO;
 
 import javax.inject.Inject;
+import java.io.IOException;
 import java.util.Collection;
 
 /**
@@ -23,11 +25,11 @@ public class MapService {
         return dao.getAll();
     }
 
-    public void add(Map map) {
+    public void add(Complaint complaint) throws IOException {
 
 
 
-        dao.add(map);
+        dao.add(complaint);
 
     }
 }

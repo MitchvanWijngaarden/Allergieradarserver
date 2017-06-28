@@ -4,12 +4,14 @@ package nl.allergieradar.resource;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.google.inject.Singleton;
 import nl.allergieradar.View;
+import nl.allergieradar.model.Complaint;
 import nl.allergieradar.model.Map;
 import nl.allergieradar.service.MapService;
 import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.io.IOException;
 import java.util.Collection;
 
 /**
@@ -39,9 +41,12 @@ public class MapResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @JsonView(View.Protected.class)
     @PermitAll
-    public void create(Map map)
-    {
-        service.add(map);
+    public void create(Complaint complaint) throws IOException {
+        try {
+            service.add(complaint);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
