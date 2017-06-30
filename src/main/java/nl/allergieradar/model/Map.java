@@ -18,7 +18,7 @@ public class Map {
     private int avg_complaint;
 
     @JsonView(View.Public.class)
-    private String location;
+    private String City;
 
 
 
@@ -43,11 +43,11 @@ public class Map {
     }
     @JsonIgnore
     public String getLocation() {
-        return location;
+        return City;
     }
 
     public void setLocation(String location) {
-        this.location = location;
+        this.City = location;
     }
     public Date getDate() {
         return date;
