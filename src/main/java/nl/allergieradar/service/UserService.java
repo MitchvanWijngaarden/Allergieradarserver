@@ -4,9 +4,7 @@ import java.util.Collection;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import nl.allergieradar.model.Answer;
-import nl.allergieradar.model.Question;
-import nl.allergieradar.model.User;
+import nl.allergieradar.model.*;
 import nl.allergieradar.persistence.UserDAO;
 
 /**
@@ -31,9 +29,21 @@ public class UserService extends BaseService<User>
 
     public Collection<Question> getQuestion() {return dao.getQuestion(); }
 
+    public Collection<Medicine> getMedicines() {return dao.getMedicines(); }
+
+    public int getUserIdByUsername(String username) {return dao.getUserIdByUsername(username); }
+
     public User get(int id)
     {
         return requireResult(dao.get(id));
+    }
+
+    public void addUserAnswer(UserAnswer useranswer){
+        dao.addUserAnswer(useranswer);
+    }
+
+    public void addUserMedicine(UserMedicine usermedicine){
+        dao.addUserMedicine(usermedicine);
     }
     
     public void add(User user)

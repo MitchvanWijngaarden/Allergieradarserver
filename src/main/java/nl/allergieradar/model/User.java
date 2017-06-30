@@ -20,12 +20,12 @@ public class User implements Principal {
     //@NotEmpty
     //@Length(min = 3, max = 100)
     @JsonView(View.Public.class)
-    private String userName;
+    private String username;
 
     //@NotEmpty
     //@Email
     @JsonView(View.Public.class)
-    private String emailAdres;
+    private String emailadres;
 
     //@NotEmpty
     //@Length(min = 4, max = 4)
@@ -54,25 +54,25 @@ public class User implements Principal {
     private String[] roles;
 
     @JsonIgnore
-    public String getUserName()
+    public String getUsername()
     {
-        return userName;
+        return username;
     }
 
-    public void setUserName(String userName)
+    public void setUsername(String username)
     {
-        this.userName = userName;
+        this.username = username;
     }
 
     @JsonIgnore
-    public String getEmailAdres()
+    public String getEmailadres()
     {
-        return emailAdres;
+        return emailadres;
     }
 
-    public void setEmailAdres(String emailAdres)
+    public void setEmailadres(String emailadres)
     {
-        this.emailAdres = emailAdres;
+        this.emailadres = emailadres;
     }
 
     @JsonIgnore
@@ -110,7 +110,7 @@ public class User implements Principal {
     @JsonIgnore
     public String getName()
     {
-        return userName;
+        return username;
     }
 
     public String[] getRoles()
@@ -141,7 +141,7 @@ public class User implements Principal {
 
     public boolean equals(User user)
     {
-        return emailAdres.equals(user.getEmailAdres());
+        return emailadres.equals(user.getEmailadres());
     }
 
     @JsonIgnore
