@@ -28,7 +28,13 @@ public class ComplaintService {
         return complaintDAOdao.getAll();
     }
 
-    public void add(Complaint complaint) { complaintDAOdao.add(complaint);
+    public void add(Complaint complaint) {
+        long time = System.currentTimeMillis();
+        java.sql.Date date = new java.sql.Date(time);
+        complaint.setDate(date);
+
+        
+        complaintDAOdao.add(complaint);
         try {
             mapdao.add(complaint);
         } catch (IOException e) {
