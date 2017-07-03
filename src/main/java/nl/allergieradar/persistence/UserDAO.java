@@ -138,21 +138,22 @@ public class UserDAO extends DatabaseDAO {
 
     public int getUserIdByUsername(String username)
     {
-        int userID = 0;
-
         try {
             getUserIdByUsername.setString(1, username);
             ResultSet rs = getUserIdByUsername.executeQuery();
 
             while (rs.next()) {
-                userID = rs.getInt(1);
+                System.out.println("username bestaat");
+                return rs.getInt(1);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return userID;
+        System.out.println("username bestaat niet");
+
+        return 0;
     }
 
     public User getByUserName(String userName)
