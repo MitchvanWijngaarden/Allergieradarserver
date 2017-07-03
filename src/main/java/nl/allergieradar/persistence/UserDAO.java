@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.inject.Singleton;
 
+import nl.allergieradar.BCrypt;
 import nl.allergieradar.model.*;
 
 /**
@@ -292,19 +293,17 @@ public class UserDAO extends DatabaseDAO {
     public void addUser(User user) {
         try {
             System.out.println("addUser called");
-            System.out.println(user.getUsername());
-            System.out.println(user.getEmailadres());
-            System.out.println(user.getYear_of_birth());
-            System.out.println(user.getGender());
-            System.out.println(user.getZip_code());
-            System.out.println(user.getPassword());
+
+            String hashedpw = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
 
             addUser.setString(1, user.getUsername());
             addUser.setString(2, user.getEmailadres());
             addUser.setInt(3, user.getYear_of_birth());
             addUser.setString(4, user.getGender());
             addUser.setInt(5, user.getZip_code());
-            addUser.setString(6, user.getPassword());
+            addUser.setString(6, hashedpw);
+
+            addUser.getResultSet();
 
             addUser.executeUpdate();
 

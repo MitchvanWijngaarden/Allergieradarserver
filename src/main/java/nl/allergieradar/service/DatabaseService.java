@@ -36,7 +36,7 @@ public class DatabaseService {
     }
 
     public Connection getConnection(String username, String password) throws SQLException {
-        String URL = "jdbc:mysql://vedex.nl:3306/vedadnd183_radar";
+        String URL = "jdbc:mysql://localhost:3306/allergieradar";
 
         Properties info = new Properties();
         Connection conn = DriverManager.getConnection(URL, username, password);
