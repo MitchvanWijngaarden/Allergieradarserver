@@ -2,8 +2,8 @@
 package nl.allergieradar;
 
 import com.google.inject.Module;
-import com.hubspot.dropwizard.guice.GuiceBundle.Builder;
 import com.hubspot.dropwizard.guice.GuiceBundle;
+import com.hubspot.dropwizard.guice.GuiceBundle.Builder;
 import io.dropwizard.Application;
 import io.dropwizard.ConfiguredBundle;
 import io.dropwizard.auth.AuthDynamicFeature;
@@ -12,14 +12,17 @@ import io.dropwizard.auth.basic.BasicCredentialAuthFilter;
 import io.dropwizard.bundles.assets.ConfiguredAssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import java.util.EnumSet;
-import javax.servlet.DispatcherType;
 import nl.allergieradar.model.User;
 import nl.allergieradar.service.AuthenticationService;
 import org.eclipse.jetty.servlet.FilterHolder;
+import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.servlet.DispatcherType;
+import javax.servlet.FilterRegistration;
+import java.util.EnumSet;
 
 /**
  *
@@ -53,6 +56,18 @@ public class ApiApplication extends Application<ApiConfiguration>
     @Override
     public void run(ApiConfiguration configuration, Environment environment)
     {
+
+        final FilterRegistration.Dynamic cors =
+                environment.servlets().addFilter("CORS", CrossOriginFilter.class);
+
+        // Configure CORS parameters
+        cors.setInitParameter("allowedOrigins", "*");
+        cors.setInitParameter("allowedHeaders", "X-Requested-With,Content-Type,Accept,Origin");
+        cors.setInitParameter("allowedMethods", "OPTIONS,GET,PUT,POST,DELETE,HEAD");
+
+        // Add URL mapping
+        cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
+
         name = configuration.getApiName();
         
         logger.info(String.format("Set API name to %s", name));
