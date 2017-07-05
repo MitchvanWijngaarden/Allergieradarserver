@@ -45,7 +45,7 @@ public class Map {
     public String getLocation() {
         return City;
     }
-
+    @JsonIgnore
     public void setLocation(String location) {
         this.City = location;
     }

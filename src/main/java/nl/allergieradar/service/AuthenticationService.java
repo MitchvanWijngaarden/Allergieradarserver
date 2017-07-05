@@ -5,15 +5,17 @@
  */
 package nl.allergieradar.service;
 
-import java.util.Optional;
 import io.dropwizard.auth.AuthenticationException;
 import io.dropwizard.auth.Authenticator;
 import io.dropwizard.auth.Authorizer;
 import io.dropwizard.auth.basic.BasicCredentials;
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import nl.allergieradar.BCrypt;
 import nl.allergieradar.model.User;
 import nl.allergieradar.persistence.UserDAO;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.Optional;
 
 /**
  *
@@ -34,13 +36,14 @@ public class AuthenticationService implements Authenticator<BasicCredentials, Us
     {
         User user = userDAO.getByUserName(credentials.getUsername());
         
-        if (user != null && user.getPassword().equals(credentials.getPassword()))
+        if (user != null && BCrypt.checkpw(credentials.getPassword(),user.getPassword()))
         {
             return Optional.of(user);
         }
         
         return Optional.empty();
     }
+
 
     @Override
     public boolean authorize(User user, String roleName)

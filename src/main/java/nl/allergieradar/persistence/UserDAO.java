@@ -1,15 +1,15 @@
 package nl.allergieradar.persistence;
 
+import nl.allergieradar.BCrypt;
+import nl.allergieradar.model.*;
+
+import javax.inject.Singleton;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import javax.inject.Singleton;
-
-import nl.allergieradar.BCrypt;
-import nl.allergieradar.model.*;
 
 /**
  *
@@ -75,9 +75,12 @@ public class UserDAO extends DatabaseDAO {
 
         try {
             getUser = conn.prepareStatement("SELECT * FROM user WHERE id=?");
+
             getUserIdByUsername = conn.prepareStatement("SELECT userID FROM user WHERE username = ?");
+
             addUser = conn.prepareStatement("INSERT INTO user (username, emailadres, year_of_birth," +
                     " gender, zip_code, password, active) VALUES (?, ?, ?, ?, ?, ?, 1 )");
+
             getAll = conn.prepareStatement("SELECT * FROM user");
 
             getAllAnswers = conn.prepareStatement("SELECT * FROM answer");
@@ -113,8 +116,11 @@ public class UserDAO extends DatabaseDAO {
                 user.setUserID(rs.getInt(1));
                 user.setUsername(rs.getString(2));
                 user.setEmailadres(rs.getString(3));
-                user.setPassword(rs.getString(4));
-                user.setActive(rs.getBoolean(5));
+                user.setYear_of_birth(rs.getInt(4));
+                user.setGender(rs.getString(5));
+                user.setZip_code(rs.getInt(6));
+                user.setPassword(rs.getString(7));
+                user.setActive(rs.getBoolean(8));
                 users.add(user);
             }
 
@@ -306,6 +312,8 @@ public class UserDAO extends DatabaseDAO {
             addUser.getResultSet();
 
             addUser.executeUpdate();
+
+            users = getAll();
 
         } catch (SQLException e) {
             e.printStackTrace();

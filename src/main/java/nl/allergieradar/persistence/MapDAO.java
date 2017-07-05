@@ -47,9 +47,8 @@ public class MapDAO extends DatabaseDAO {
             }
         }
     public String getLocation(Complaint complaint){
-        String lng=complaint.getLongtitude();
-        String lat= complaint.getLatitude();
-
+        String lng=complaint.getLongtitude().replace(",",".");
+        String lat= complaint.getLatitude().replace(",",".");
 
         System.out.println(lat+","+lng);
 
@@ -110,6 +109,7 @@ public class MapDAO extends DatabaseDAO {
                 map.setLocation(rs.getString(3));
                 map.setDate(rs.getDate(4));
                 maps.add(map);
+
             }
 
         } catch (Exception e) {
